@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CGPA Compass | Bangladesh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root{--ink:#17212b;--muted:#6c7a86;--line:#dbe5e5;--paper:#fff;--mint:#c8f0df;--teal:#137c72;--navy:#173b4d;--coral:#f0785f;--bg:#eef5f2}
+      *{box-sizing:border-box}
+      body{margin:0;min-height:100vh;background:radial-gradient(circle at 8% 8%,#d8f3e7 0 16%,transparent 34%),linear-gradient(135deg,#f6faf8 0%,var(--bg) 100%);color:var(--ink);font-family:'DM Sans',sans-serif}
+      body:before{content:'';display:block;height:7px;background:linear-gradient(90deg,var(--teal),#52b99d,var(--coral))}
+      .shell{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:42px 0 64px}
+      .hero{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:30px}
+      .eyebrow{margin:0 0 10px;color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+      h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;color:var(--navy)}
+      h1{font-size:clamp(2.2rem,5vw,4.5rem);letter-spacing:-.04em;line-height:.96;max-width:650px}
+      .hero-copy{max-width:520px;margin:15px 0 0;color:var(--muted);font-size:16px;line-height:1.6}
+      .badge{display:flex;align-items:center;gap:10px;white-space:nowrap;padding:12px 16px;border:1px solid #b7ded0;border-radius:999px;background:#f7fffb;color:var(--teal);font-size:13px;font-weight:700}
+      .badge-dot{width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 5px #ffe4dc}
+      .toolbar,.panel{border:1px solid rgba(183,206,201,.85);background:rgba(255,255,255,.84);box-shadow:0 18px 45px rgba(31,76,76,.08);border-radius:18px}
+      .toolbar{display:flex;flex-wrap:wrap;align-items:end;gap:18px;padding:20px 22px;margin-bottom:20px}
+      .field{display:flex;flex-direction:column;gap:7px;min-width:210px}
+      label{color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+      select,input{width:100%;border:1px solid var(--line);border-radius:9px;background:#fbfdfc;color:var(--ink);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
+      select{padding:11px 34px 11px 12px}
+      input{padding:10px 11px}
+      select:focus,input:focus{border-color:#4aa995;box-shadow:0 0 0 3px rgba(74,169,149,.15)}
+      .panel{padding:25px;animation:rise .45s ease both}
+      .panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+      .panel-heading h3{font-size:22px}
+      .panel-heading p{margin:6px 0 0;color:var(--muted);font-size:13px}
+      .section-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--mint);color:var(--teal);font-family:'Space Grotesk';font-weight:700}
+      table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+      th,td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:left}
+      th{background:#f2f8f5;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+      tr:last-child td{border-bottom:0}
+      td{text-align:left;font-size:14px}
+      td input,td select{min-width:75px}
+      button{border:0;border-radius:9px;padding:11px 16px;margin:16px 7px 0 0;background:var(--teal);color:white;font:600 13px 'DM Sans',sans-serif;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+      button:hover{background:#0c675f;box-shadow:0 7px 14px rgba(19,124,114,.2);transform:translateY(-1px)}
+      button.remove,button.remove-semester{padding:8px 11px;background:#fff0ec;color:#c95743;font-size:12px}
+      button.remove:hover,button.remove-semester:hover{background:#ffe1d9;box-shadow:none}
+      #result{margin-top:20px;padding:18px 22px;border:1px solid #b7ded0;border-radius:14px;background:#eafff5;color:var(--navy);font-weight:600;animation:rise .35s ease both}
+      #result strong{color:var(--teal);font-family:'Space Grotesk';font-size:18px}
+      .result-table{margin:12px 0 18px;max-width:900px}
+      .course-entry-hidden{display:none}
+      .semester-entry-hidden{display:none}
+      .footer-credit{padding:16px 0 8px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.04em}
+      .footer-credit strong{color:var(--navy)}
+      @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+      @media(max-width:700px){.shell{width:min(100% - 24px,560px);padding-top:28px}.hero{display:block}.badge{display:inline-flex;margin-top:20px}.toolbar{padding:16px}.field{min-width:100%}.panel{padding:15px;overflow:hidden}table{font-size:12px;min-width:600px}.panel{overflow-x:auto}.panel-heading{min-width:560px}.panel-heading p{max-width:300px}#result{font-size:13px}}
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Academic performance tracker</p>
+          <h1>Find your academic north star.</h1>
+          <p class="hero-copy">A focused CGPA calculator for Bangladesh grading systems. Add your semester or course data and keep your progress clear.</p>
+        </div>
+        <div class="badge"><span class="badge-dot"></span>Ready to calculate</div>
+      </header>
+      <section class="toolbar" aria-label="Calculator settings">
+        <div class="field">
+          <label for="grading-system">Grading system</label>
+      <select id="grading-system">
+        <option value="Public University" selected>Public University</option>
+        <option value="DIU">Daffodil International University (DIU)</option>
+      </select>
+        </div>
+        <div class="field">
+          <label for="result-view">Calculation view</label>
+      <select id="result-view">
+        <option value="semester" selected>Semester Wise</option>
+        <option value="course">Course Wise</option>
+      </select>
+        </div>
+      </section>
+    <section id="semester-entry" class="panel">
+      <div class="panel-heading"><div><h3>Semester-wise Results</h3><p>Enter each semester's credits and SGPA to calculate your overall CGPA.</p></div><span class="section-mark">01</span></div>
+      <table id="semester-courses">
+        <thead>
+          <tr><th>Semester Name</th><th>Semester Total Credits</th><th>SGPA</th><th>Action</th></tr>
+        </thead>
+        <tbody id="semester-body"></tbody>
+      </table>
+      <button id="add-semester">Add Semester</button>
+      <button id="calculate-semesters">Calculate SGPA/CGPA</button>
+    </section>
+    <section id="course-entry" class="panel">
+      <div class="panel-heading"><div><h3>Course-wise Results</h3><p>Build your result course by course and choose the grade for each subject.</p></div><span class="section-mark">02</span></div>
+      <table id="courses">
+        <thead>
+          <tr>
+            <th>Course Name</th>
+             <th class="course-entry-hidden">Semester</th>
+            <th>Credits</th>
+             <th class="course-entry-hidden">Marks (%)</th>
+            <th>Grade</th>
+            <th>Point</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="courses-body"></tbody>
+      </table>
+
+      <div>
+        <button id="add-course">Add Course</button>
+        <button id="calc-cgpa">Calculate CGPA</button>
+        <button id="clear-all">Clear</button>
+      </div>
+    </section>
+
+    <div id="result"></div>
+    <footer class="footer-credit">Developed by <strong>Hridoy Saha</strong></footer>
+    </main>
+    <script src="ugc-calculator.js"></script>
+  </body>
+</html>
